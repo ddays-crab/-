@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌟 每日英語小天地 - 閱讀與挑戰</title>
+  <title>Studio Classroom - WePlay 聽力與閱讀四步闖關</title>
   <style>
     :root {
       --primary: #4F46E5;
       --primary-hover: #4338CA;
       --primary-light: #EEF2FF;
-      --accent: #10B981;
+      --success: #10B981;
       --bg: #F8FAFC;
       --card-bg: #FFFFFF;
       --text: #1E293B;
@@ -17,319 +17,417 @@
       --border: #E2E8F0;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 24px 16px; }
+    .container { max-width: 900px; margin: 0 auto; }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding: 24px 16px;
-    }
+    header { text-align: center; margin-bottom: 24px; }
+    header h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 6px; }
+    header p { color: var(--text-muted); font-size: 0.95rem; }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
+    /* 進度指示條 */
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      position: relative;
     }
-
-    /* 頂部標題與學生資訊 */
-    header {
-      text-align: center;
-      margin-bottom: 20px;
+    .stepper::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--border);
+      transform: translateY(-50%);
+      z-index: 1;
     }
-
-    header h1 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 6px;
-    }
-
-    header p {
+    .step-item {
+      position: relative;
+      z-index: 2;
+      background: var(--card-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 600;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+    .step-item.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+    .step-item.completed {
+      border-color: var(--success);
+      color: var(--success);
+      background: #ECFDF5;
     }
 
-    .student-bar {
+    /* 純音訊控制列（使用 video 隱藏畫面，高度設為 48px 控制列） */
+    .audio-card {
       background: var(--card-bg);
       padding: 16px 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
       margin-bottom: 24px;
       display: flex;
+      align-items: center;
       gap: 16px;
       flex-wrap: wrap;
-      align-items: center;
     }
-
-    .input-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .input-group label {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .input-group input {
-      padding: 8px 12px;
-      border: 1px solid #CBD5E1;
-      border-radius: 8px;
-      font-size: 0.95rem;
+    .pure-audio-player {
+      flex: 1;
+      min-width: 250px;
+      height: 48px;
       outline: none;
-      transition: border-color 0.2s;
     }
 
-    .input-group input:focus {
-      border-color: var(--primary);
-    }
-
-    /* 主畫面雙欄分割 */
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    @media (max-width: 900px) {
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
+    /* 闖關步驟面板 */
+    .step-panel {
+      display: none;
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 20px;
+      padding: 28px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       border: 1px solid var(--border);
+      animation: fadeIn 0.4s ease;
+    }
+    .step-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .card-title {
-      font-size: 1.15rem;
+    .step-title {
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
-    /* PDF 閱讀區 */
-    .pdf-container {
-      width: 100%;
-      height: 600px;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: #F1F5F9;
-    }
-
-    .pdf-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* 作答區 */
-    .question-block {
-      background: var(--primary-light);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      border-left: 4px solid var(--primary);
-    }
-
-    .question-block .title {
-      font-weight: 600;
-      color: #312E81;
-      margin-bottom: 8px;
+    .step-desc {
+      color: var(--text-muted);
+      margin-bottom: 20px;
       font-size: 0.95rem;
     }
 
-    .answer-box {
+    /* 聽寫文字輸入框 */
+    .dictation-box {
       width: 100%;
-      min-height: 75px;
-      padding: 10px 12px;
-      border: 1px solid #CBD5E1;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-      resize: vertical;
-      background: #FFFFFF;
-    }
-
-    .answer-box:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-    }
-
-    .submit-btn {
-      width: 100%;
+      min-height: 180px;
       padding: 14px;
-      background: var(--primary);
-      color: white;
-      border: none;
+      border: 2px solid #CBD5E1;
       border-radius: 10px;
       font-size: 1.05rem;
+      outline: none;
+      resize: vertical;
+      line-height: 1.8;
+      transition: border-color 0.2s;
+    }
+    .dictation-box:focus { border-color: var(--primary); }
+
+    .word-counter {
+      margin-top: 8px;
       font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    .submit-btn:hover {
-      background: var(--primary-hover);
-    }
-
-    .submit-btn:active {
-      transform: scale(0.99);
-    }
-
-    /* 成功彈窗 */
-    #successModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 16px;
-    }
-
-    .modal-box {
-      background: white;
-      padding: 32px 24px;
-      border-radius: 16px;
-      text-align: center;
-      max-width: 380px;
-      width: 100%;
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    }
-
-    .modal-box h3 {
-      font-size: 1.4rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .modal-box p {
-      color: var(--text-muted);
+      color: var(--primary);
+      text-align: right;
       font-size: 0.95rem;
-      margin-bottom: 20px;
     }
 
-    .modal-box button {
-      padding: 8px 24px;
+    /* 通用按鈕 */
+    .btn {
+      padding: 12px 24px;
       background: var(--primary);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 20px;
+      width: 100%;
     }
+    .btn:hover { background: var(--primary-hover); }
+
+    /* 段落閱讀樣式 */
+    .paragraph-card {
+      background: #F8FAFC;
+      border-left: 4px solid var(--primary);
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .para-en { font-weight: 600; margin-bottom: 6px; color: #1E293B; }
+    .para-zh { color: #64748B; font-size: 0.9rem; }
+
+    /* 理解測驗樣式 */
+    .quiz-group {
+      background: var(--primary-light);
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+    }
+    .quiz-title { font-weight: 600; color: #312E81; margin-bottom: 10px; font-size: 0.95rem; }
+    .quiz-option { display: block; margin-bottom: 6px; font-size: 0.9rem; cursor: pointer; }
+
+    /* 成果比較看板 */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background: var(--primary-light);
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+
+    /* 單字整理表格 */
+    .word-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+    }
+    .word-table th, .word-table td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .word-table th { background: var(--primary-light); color: var(--primary); }
   </style>
 </head>
 <body>
 
   <div class="container">
     <header>
-      <h1>✨ 今日英語閱讀與作業小挑戰 ✨</h1>
-      <p>請仔細閱讀左邊的教材，並在右邊回答問題，寫完記得按送出喔！</p>
+      <h1>✨ WePlay 英語聽力與閱讀四步挑戰 ✨</h1>
+      <p>跟著步驟闖關：盲聽聽寫 ➔ 逐段理解 ➔ 二次聽寫 ➔ 文法補充</p>
     </header>
 
-    <!-- 學生資訊 -->
-    <div class="student-bar">
-      <div class="input-group">
-        <label for="studentName">👤 學生姓名：</label>
-        <input type="text" id="studentName" placeholder="請輸入名字 (例如: Sandy)" required>
-      </div>
-      <div class="input-group">
-        <label for="studentClass">🏫 班級 / 座號：</label>
-        <input type="text" id="studentClass" placeholder="例如: 5年A班 03號">
-      </div>
+    <!-- 步驟條 -->
+    <div class="stepper">
+      <div class="step-item active" id="stepIndicator1">Step 1: 首次盲聽</div>
+      <div class="step-item" id="stepIndicator2">Step 2: 逐段精讀</div>
+      <div class="step-item" id="stepIndicator3">Step 3: 二次挑戰</div>
+      <div class="step-item" id="stepIndicator4">Step 4: 文法補充</div>
     </div>
 
-    <div class="content-grid">
-      <!-- 左欄：PDF 教材區 -->
-      <div class="card">
-        <div class="card-title">📖 今日閱讀教材 (PDF)</div>
-        <div class="pdf-container">
-          <iframe src="0825.pdf"></iframe>
+    <!-- 純音訊播放列（直接讀取 ScreenRecording_08-25.mov 且無畫面） -->
+    <div class="audio-card">
+      <strong style="color: var(--primary);">🎧 課文音檔播放：</strong>
+      <video class="pure-audio-player" controls preload="metadata">
+        <source src="ScreenRecording_08-25.mov" type="video/mp4">
+        <source src="ScreenRecording_08-25.mov" type="video/quicktime">
+        您的瀏覽器不支援此音訊播放。
+      </video>
+    </div>
+
+    <!-- Step 1: 首次盲聽 -->
+    <div class="step-panel active" id="panel1">
+      <div class="step-title">🎧 第一步：首次盲聽與同步聽寫</div>
+      <div class="step-desc">請播放上方音檔，邊聽邊將你聽到的英文單字或句子輸入在下方。<b>每個單字之間請用「空格」隔開</b>，看看你第一次可以捕捉到多少單字！</div>
+      
+      <textarea class="dictation-box" id="dictation1" placeholder="請在此輸入你聽到的英文單字或句子... (例如: Many people want to connect with others)"></textarea>
+      <div class="word-counter">目前捕捉單字量：<span id="countDisplay1">0</span> 個字</div>
+
+      <button class="btn" onclick="finishStep1()">🚀 完成第一次盲聽，前往閱讀理解</button>
+    </div>
+
+    <!-- Step 2: 逐段精讀與理解檢測 -->
+    <div class="step-panel" id="panel2">
+      <div class="step-title">📖 第二步：逐段閱讀與單字理解</div>
+      <div class="step-desc">現在來閱讀課文與中文翻譯，並回答小問題確認理解程度：</div>
+
+      <div class="paragraph-card">
+        <div class="para-en">[Paragraph 1] Many people want to connect with others but find interacting in public hard. Social media offers a comfortable alternative. It lets users be part of the group without much risk. WePlay mixes games and social chat. Users create colorful online characters instead of showing their real faces. This extra bit of privacy can help shy users feel more relaxed.</div>
+        <div class="para-zh">【翻譯】許多人想與他人建立連結，卻覺得在公共場合互動很困難。社群媒體提供了一個舒適的替代方案。WePlay 結合遊戲與社交聊天，使用者可創建虛擬角色而不用露出生理真面目，讓害羞的使用者感到放鬆。</div>
+      </div>
+
+      <div class="paragraph-card">
+        <div class="para-en">[Paragraph 2] WePlay works like a social playground. Users enter virtual rooms and play short party games together. Some games ask players to guess words or draw pictures. Others test logic or quick thinking. Players can also talk using voice chat while they play. Many rooms have hosts who guide the game and manage the group. The shared activity helps people start conversations naturally.</div>
+        <div class="para-zh">【翻譯】WePlay 就像社交遊樂場。使用者進入虛擬房間玩派對遊戲，有些猜字、畫畫或考驗邏輯敏捷思維。遊戲時還能語音聊天，共同活動幫助人們自然開啟對話。</div>
+      </div>
+
+      <div class="paragraph-card">
+        <div class="para-en">[Paragraph 3] The app feels less like endless scrolling and more like a quick social break. A player may join a room, play a game and chat for a few minutes. A player can leave and return later. Many users say that short visits feel comfortable. For many, WePlay offers a light and playful way to meet others online.</div>
+        <div class="para-zh">【翻譯】這款 App 給人的感覺不像在無止境滑手機，更像簡短的社交小憩。使用者可以短暫停留、玩個遊戲聊天幾分鐘，提供輕鬆有趣的交友方式。</div>
+      </div>
+
+      <!-- 快速理解檢測 -->
+      <div class="quiz-group">
+        <div class="quiz-title">💡 快速檢測 1：這篇文章主要在介紹什麼主題？</div>
+        <label class="quiz-option"><input type="radio" name="sq1" value="A"> (A) 如何在學校課堂上考取好成績</label>
+        <label class="quiz-option"><input type="radio" name="sq1" value="B"> (B) 一款結合派對遊戲與輕鬆語音聊天的交友 App</label>
+        <label class="quiz-option"><input type="radio" name="sq1" value="C"> (C) 介紹如何組裝專業的電腦遊戲設備</label>
+      </div>
+
+      <div class="quiz-group">
+        <div class="quiz-title">💡 快速檢測 2：單字 "privacy" 在文中的意思是什麼？</div>
+        <label class="quiz-option"><input type="radio" name="sq2" value="A"> (A) 隱私 / 隱私權</label>
+        <label class="quiz-option"><input type="radio" name="sq2" value="B"> (B) 冒險之旅</label>
+        <label class="quiz-option"><input type="radio" name="sq2" value="C"> (C) 嚴格的規定</label>
+      </div>
+
+      <button class="btn" onclick="finishStep2()">🎯 理解完畢，進行第二次聽力挑戰</button>
+    </div>
+
+    <!-- Step 3: 二次精聽對比挑戰 -->
+    <div class="step-panel" id="panel3">
+      <div class="step-title">🎧 第三步：第二次精聽聽寫（驗收成果）</div>
+      <div class="step-desc">經過剛才的單字與文章理解，現在再聽一次音檔！看看這次你能不能捕捉到更多單字：</div>
+
+      <textarea class="dictation-box" id="dictation2" placeholder="再次播放上方音檔，並在此輸入聽到的所有單字..."></textarea>
+      <div class="word-counter">第二次捕捉單字量：<span id="countDisplay2">0</span> 個字</div>
+
+      <button class="btn" onclick="finishStep3()">📊 結算兩次聽力進步成效</button>
+
+      <!-- 進步成果展示 -->
+      <div id="progressResult" style="display: none; margin-top: 20px;">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div>第一次捕捉單字</div>
+            <div class="stat-num" id="resCount1">0</div>
+          </div>
+          <div class="stat-card">
+            <div>第二次捕捉單字</div>
+            <div class="stat-num" id="resCount2" style="color: var(--success);">0</div>
+          </div>
         </div>
-      </div>
-
-      <!-- 右欄：問題作答區 -->
-      <div class="card">
-        <div class="card-title">✍️ 課後問答與心得</div>
-        <form id="quizForm">
-          
-          <div class="question-block">
-            <div class="title">Q1. 根據文章，故事的主要主角是誰？發生了什麼事？</div>
-            <textarea class="answer-box" id="q1" placeholder="請在此輸入你的回答..." required></textarea>
-          </div>
-
-          <div class="question-block">
-            <div class="title">Q2. 請從文章中挑出 2 個你今天學到的新單字與它的中文意思：</div>
-            <textarea class="answer-box" id="q2" placeholder="例：1. adventure (冒險)  2. curious (好奇的)" required></textarea>
-          </div>
-
-          <div class="question-block">
-            <div class="title">Q3. 如果你是故事裡的主角，你會做出什麼不一樣的選擇？為什麼？</div>
-            <textarea class="answer-box" id="q3" placeholder="請分享你的想法..." required></textarea>
-          </div>
-
-          <button type="submit" class="submit-btn">🚀 填寫完畢，送出作業！</button>
-        </form>
+        <div id="progressMsg" style="text-align: center; font-weight: 600; color: var(--primary); font-size: 1.1rem;"></div>
+        <button class="btn" style="background: var(--success);" onclick="finishToStep4()">🌟 前往文法與重點單字精講</button>
       </div>
     </div>
-  </div>
 
-  <!-- 成功彈窗 -->
-  <div id="successModal">
-    <div class="modal-box">
-      <h3>🎉 作業已成功繳交！</h3>
-      <p>做得太棒了！老師已經收到你的回答囉，今天也辛苦了！✨</p>
-      <button onclick="document.getElementById('successModal').style.display='none'">太棒了！</button>
+    <!-- Step 4: 文法與重點單字精講 -->
+    <div class="step-panel" id="panel4">
+      <div class="step-title">📚 第四步：會考文法與核心單字精講</div>
+      <div class="step-desc">太棒了！你已經完成了兩次聽力與課文理解，以下是本課重點整理：</div>
+
+      <div class="paragraph-card">
+        <h4 style="color: var(--primary); margin-bottom: 6px;">📌 核心文法：名詞子句當受詞[cite: 1]</h4>
+        <p><b>句型結構：</b> <code>S + V + that + S + V...</code>[cite: 1]</p>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
+          常用於表達「想法、事實或感受」[cite: 1]。連接詞 that 引導的名詞子句當作主要動詞（say, think, feel, find）的受詞[cite: 1]。<br>
+          <b>課文例句：</b> <i>Many users say <u>that short visits feel comfortable</u>.</i>[cite: 1]
+        </p>
+      </div>
+
+      <div class="paragraph-card">
+        <h4 style="color: var(--primary); margin-bottom: 6px;">📌 重要片語：connect (up) with[cite: 1]</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          指在心理或社交層面「因為志趣相投而產生共鳴、建立連結」[cite: 1]。<br>
+          <b>例句：</b> <i>It is easier to connect with people with the same interests.</i>[cite: 1]
+        </p>
+      </div>
+
+      <h4 style="margin-top: 20px; color: var(--primary);">📝 核心單字庫[cite: 1]</h4>
+      <table class="word-table">
+        <tr><th>單字</th><th>詞性/中文</th><th>例句重點</th></tr>
+        <tr><td><b>privacy</b></td><td>(n.) 隱私[cite: 1]</td><td>She closed the door to have some privacy.[cite: 1]</td></tr>
+        <tr><td><b>logic</b></td><td>(n.) 邏輯[cite: 1]</td><td>His logic helped solve the difficult puzzle.[cite: 1]</td></tr>
+        <tr><td><b>virtual</b></td><td>(adj.) 虛擬的[cite: 1]</td><td>virtual reality (VR) 虛擬實境[cite: 1]</td></tr>
+        <tr><td><b>endless</b></td><td>(adj.) 無休止的[cite: 1]</td><td>-less 表示「無」，如 careless, endless.[cite: 1]</td></tr>
+        <tr><td><b>playful</b></td><td>(adj.) 有趣的[cite: 1]</td><td>A playful way to meet new people.[cite: 1]</td></tr>
+      </table>
+
+      <div style="text-align: center; margin-top: 30px; padding: 20px; background: #ECFDF5; border-radius: 12px; border: 1px solid #A7F3D0;">
+        <h3 style="color: var(--success); margin-bottom: 6px;">🎉 恭喜完成今日全部挑戰！</h3>
+        <p style="color: #065F46; font-size: 0.95rem;">你已經完成了聽力、閱讀理解與文法吸收，今天表現非常棒！</p>
+      </div>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById('quizForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+    let firstCount = 0;
+    let secondCount = 0;
 
-      const name = document.getElementById('studentName').value.trim();
-      const studentClass = document.getElementById('studentClass').value.trim();
-      const q1 = document.getElementById('q1').value.trim();
-      const q2 = document.getElementById('q2').value.trim();
-      const q3 = document.getElementById('q3').value.trim();
+    // 單字計算函數（以空白鍵分割為基準）
+    function countWords(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\s+/).filter(word => word.length > 0).length;
+    }
 
-      if (!name) {
-        alert('請先填寫你的姓名喔！');
-        document.getElementById('studentName').focus();
+    // 即時計算第一次聽寫單字量
+    document.getElementById('dictation1').addEventListener('input', function() {
+      const count = countWords(this.value);
+      document.getElementById('countDisplay1').innerText = count;
+    });
+
+    // 即時計算第二次聽寫單字量
+    document.getElementById('dictation2').addEventListener('input', function() {
+      const count = countWords(this.value);
+      document.getElementById('countDisplay2').innerText = count;
+    });
+
+    // 切換 Step 1 -> Step 2
+    function finishStep1() {
+      firstCount = countWords(document.getElementById('dictation1').value);
+      if (firstCount === 0) {
+        if (!confirm("你尚未輸入任何單字，確定要前往下一步嗎？")) return;
+      }
+      switchStep(1, 2);
+    }
+
+    // 切換 Step 2 -> Step 3
+    function finishStep2() {
+      const q1 = document.querySelector('input[name="sq1"]:checked');
+      const q2 = document.querySelector('input[name="sq2"]:checked');
+      if (!q1 || !q2) {
+        alert("請先完成兩題小檢測再前往下一步喔！");
         return;
       }
+      switchStep(2, 3);
+    }
 
-      const submissionData = {
-        timestamp: new Date().toLocaleString('zh-TW'),
-        name: name,
-        class: studentClass,
-        answers: [q1, q2, q3]
-      };
+    // 結算 Step 3 並顯示進步成效
+    function finishStep3() {
+      secondCount = countWords(document.getElementById('dictation2').value);
+      document.getElementById('resCount1').innerText = firstCount;
+      document.getElementById('resCount2').innerText = secondCount;
 
-      console.log('小朋友繳交的作業：', submissionData);
+      const diff = secondCount - firstCount;
+      const progressMsg = document.getElementById('progressMsg');
 
-      // 顯示成功提示
-      document.getElementById('successModal').style.display = 'flex';
-      form.reset();
-    });
+      if (diff > 0) {
+        progressMsg.innerHTML = `🎉 太棒了！第二次比第一次多捕捉了 <span style="color:var(--success); font-size:1.3rem;">+${diff}</span> 個單字！進步超明顯！`;
+      } else if (diff === 0) {
+        progressMsg.innerHTML = `👏 兩次捕捉字數持平（${secondCount} 字），都有維持高專注度！`;
+      } else {
+        progressMsg.innerHTML = `💪 完成了兩次精聽練習，多聽幾次一定會更敏銳！`;
+      }
+
+      document.getElementById('progressResult').style.display = 'block';
+    }
+
+    // 切換 Step 3 -> Step 4
+    function finishToStep4() {
+      switchStep(3, 4);
+    }
+
+    // 步驟切換函數
+    function switchStep(fromStep, toStep) {
+      document.getElementById(`panel${fromStep}`).classList.remove('active');
+      document.getElementById(`panel${toStep}`).classList.add('active');
+
+      document.getElementById(`stepIndicator${fromStep}`).classList.remove('active');
+      document.getElementById(`stepIndicator${fromStep}`).classList.add('completed');
+      document.getElementById(`stepIndicator${toStep}`).classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
