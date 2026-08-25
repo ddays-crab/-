@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌟 每日英語小天地 - 閱讀與挑戰</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --accent: #10B981;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* 頂部標題與學生資訊 */
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .student-bar {
+      background: var(--card-bg);
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .input-group input {
+      padding: 8px 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+    }
+
+    /* 主畫面雙欄分割 */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* PDF 閱讀區 */
+    .pdf-container {
+      width: 100%;
+      height: 600px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #F1F5F9;
+    }
+
+    .pdf-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* 作答區 */
+    .question-block {
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .question-block .title {
+      font-weight: 600;
+      color: #312E81;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .answer-box {
+      width: 100%;
+      min-height: 75px;
+      padding: 10px 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      resize: vertical;
+      background: #FFFFFF;
+    }
+
+    .answer-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+    }
+
+    /* 成功彈窗 */
+    #successModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      padding: 16px;
+    }
+
+    .modal-box {
+      background: white;
+      padding: 32px 24px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    .modal-box h3 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .modal-box button {
+      padding: 8px 24px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>✨ 今日英語閱讀與作業小挑戰 ✨</h1>
+      <p>請仔細閱讀左邊的教材，並在右邊回答問題，寫完記得按送出喔！</p>
+    </header>
+
+    <!-- 學生資訊 -->
+    <div class="student-bar">
+      <div class="input-group">
+        <label for="studentName">👤 學生姓名：</label>
+        <input type="text" id="studentName" placeholder="請輸入名字 (例如: Sandy)" required>
+      </div>
+      <div class="input-group">
+        <label for="studentClass">🏫 班級 / 座號：</label>
+        <input type="text" id="studentClass" placeholder="例如: 5年A班 03號">
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- 左欄：PDF 教材區 -->
+      <div class="card">
+        <div class="card-title">📖 今日閱讀教材 (PDF)</div>
+        <div class="pdf-container">
+          <!-- 這裡會讀取同一個資料夾下的 lesson.pdf -->
+          <iframe src="lesson.pdf"></iframe>
+        </div>
+      </div>
+
+      <!-- 右欄：問題作答區 -->
+      <div class="card">
+        <div class="card-title">✍️ 課後問答與心得</div>
+        <form id="quizForm">
+          
+          <div class="question-block">
+            <div class="title">Q1. 根據文章，故事的主要主角是誰？發生了什麼事？</div>
+            <textarea class="answer-box" id="q1" placeholder="請在此輸入你的回答..." required></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="title">Q2. 請從文章中挑出 2 個你今天學到的新單字與它的中文意思：</div>
+            <textarea class="answer-box" id="q2" placeholder="例：1. adventure (冒險)  2. curious (好奇的)" required></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="title">Q3. 如果你是故事裡的主角，你會做出什麼不一樣的選擇？為什麼？</div>
+            <textarea class="answer-box" id="q3" placeholder="請分享你的想法..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">🚀 填寫完畢，送出作業！</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成功彈窗 -->
+  <div id="successModal">
+    <div class="modal-box">
+      <h3>🎉 作業已成功繳交！</h3>
+      <p>做得太棒了！老師已經收到你的回答囉，今天也辛苦了！✨</p>
+      <button onclick="document.getElementById('successModal').style.display='none'">太棒了！</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('quizForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('studentName').value.trim();
+      const studentClass = document.getElementById('studentClass').value.trim();
+      const q1 = document.getElementById('q1').value.trim();
+      const q2 = document.getElementById('q2').value.trim();
+      const q3 = document.getElementById('q3').value.trim();
+
+      if (!name) {
+        alert('請先填寫你的姓名喔！');
+        document.getElementById('studentName').focus();
+        return;
+      }
+
+      const submissionData = {
+        timestamp: new Date().toLocaleString('zh-TW'),
+        name: name,
+        class: studentClass,
+        answers: [q1, q2, q3]
+      };
+
+      console.log('小朋友繳交的作業：', submissionData);
+
+      // 顯示成功提示
+      document.getElementById('successModal').style.display = 'flex';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
