@@ -26,7 +26,7 @@
     header h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 6px; }
     header p { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* 進度指示條 */
+    /* 步驟導覽列 */
     .stepper {
       display: flex;
       justify-content: space-between;
@@ -67,7 +67,7 @@
       background: #ECFDF5;
     }
 
-    /* 闖關步驟面板 */
+    /* 步驟面板 */
     .step-panel {
       display: none;
       background: var(--card-bg);
@@ -99,7 +99,7 @@
       font-size: 0.95rem;
     }
 
-    /* 通用按鈕 */
+    /* 按鈕 */
     .btn {
       padding: 12px 24px;
       background: var(--primary);
@@ -185,7 +185,7 @@
       font-weight: 600;
     }
 
-    /* 測驗區塊 */
+    /* 題目區塊 */
     .quiz-card {
       background: #FAFAFA;
       border: 1px solid var(--border);
@@ -199,6 +199,7 @@
       color: #1E293B;
       margin-bottom: 10px;
       font-size: 0.95rem;
+      line-height: 1.6;
     }
 
     .cloze-input {
@@ -273,15 +274,15 @@
 
   <div class="container">
     <header>
-      <h1>✨ WePlay 英語閱讀與語法素養挑戰 ✨</h1>
-      <p>第一步：逐段閱讀與探索 ➔ 第二步：單字與語法精講 ➔ 第三步：會考情境實戰測驗</p>
+      <h1>✨ WePlay 英語主題閱讀與素養實戰 ✨</h1>
+      <p>第一步：逐段閱讀與探索 ➔ 第二步：語法與單字精講 ➔ 第三步：填空與會考素養測驗</p>
     </header>
 
     <!-- 步驟條 -->
     <div class="stepper">
       <div class="step-item active" id="stepIndicator1">Step 1: 逐段閱讀</div>
       <div class="step-item" id="stepIndicator2">Step 2: 語法精講</div>
-      <div class="step-item" id="stepIndicator3">Step 3: 素養測驗</div>
+      <div class="step-item" id="stepIndicator3">Step 3: 實戰測驗</div>
     </div>
 
     <!-- Step 1: 逐段精讀（3D 翻轉卡片） -->
@@ -355,42 +356,42 @@
     <!-- Step 2: 語法與核心單字精講 -->
     <div class="step-panel" id="panel2">
       <div class="step-title">📚 第二步：會考文法與重點單字精講</div>
-      <div class="step-desc">請仔細複習以下重點，等一下在第三步的小測驗中會直接考出情境運用題喔！</div>
+      <div class="step-desc">請仔細複習以下重點，等一下在第三步的小測驗中會考出精聽填空與會考題型喔！</div>
 
       <div style="background: #F8FAFC; border-left: 4px solid var(--primary); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
         <h4 style="color: var(--primary); margin-bottom: 6px;">📌 核心文法：名詞子句當受詞 (that + S + V)[cite: 1]</h4>
         <p><b>句型結構：</b> <code>主要主詞 + 動詞(say/think/feel/show) + that + [主詞 + 動詞...]</code>[cite: 1]</p>
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">
-          that 引導的名詞子句用來表達完整的「想法、事實或感受」，在口語中 that 常可省略[cite: 1]。<br>
-          <b>課文例句：</b> <i>Many users say <u>that short visits feel comfortable</u>.</i>[cite: 1]
+          that 引導的名詞子句用來表達完整的「想法、事實或感受」，口語中 that 常可省略[cite: 1]。<br>
+          <b>課文原句：</b> <i>Many users say <u>that short visits feel comfortable</u>.</i>[cite: 1]
         </p>
       </div>
 
       <div style="background: #F8FAFC; border-left: 4px solid var(--primary); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
         <h4 style="color: var(--primary); margin-bottom: 6px;">📌 重要片語：connect (up) with[cite: 1]</h4>
         <p style="font-size: 0.9rem; color: var(--text-muted);">
-          指因為「志趣相投、互相理解而產生共鳴、建立深厚連結」[cite: 1]。<br>
-          <b>例句：</b> <i>It is easier to <u>connect with</u> people with the same hobbies.</i>[cite: 1]
+          指在心理或社交層面「因為志趣相投而產生共鳴、建立連結」[cite: 1]。<br>
+          <b>例句：</b> <i>It is easier to <u>connect with</u> people with the same interests.</i>[cite: 1]
         </p>
       </div>
 
       <h4 style="margin-top: 20px; color: var(--primary);">📝 核心單字庫 (Word Bank)[cite: 1]</h4>
       <table class="word-table">
-        <tr><th>單字</th><th>詞性 / 中文</th><th>情境用法解析</th></tr>
-        <tr><td><b>privacy</b></td><td>(n.) 隱私[cite: 1]</td><td>注重個人資料安全、不想公開露面[cite: 1]。</td></tr>
-        <tr><td><b>logic</b></td><td>(n.) 邏輯[cite: 1]</td><td>解謎、推理或清晰的思維模式[cite: 1]。</td></tr>
-        <tr><td><b>virtual</b></td><td>(adj.) 虛擬的[cite: 1]</td><td>網路世界中的虛擬空間 (virtual room)[cite: 1]。</td></tr>
-        <tr><td><b>endless</b></td><td>(adj.) 無休止的[cite: 1]</td><td>字尾 -less 表「無」，如滑不完的動態[cite: 1]。</td></tr>
-        <tr><td><b>playful</b></td><td>(adj.) 有趣的/愛玩開玩笑的[cite: 1]</td><td>形容氣氛輕鬆歡樂、充滿童趣[cite: 1]。</td></tr>
+        <tr><th>單字</th><th>詞性 / 中文</th><th>例句重點</th></tr>
+        <tr><td><b>privacy</b></td><td>(n.) 隱私[cite: 1]</td><td>She closed the door to have some privacy.[cite: 1]</td></tr>
+        <tr><td><b>logic</b></td><td>(n.) 邏輯[cite: 1]</td><td>His logic helped solve the difficult puzzle.[cite: 1]</td></tr>
+        <tr><td><b>virtual</b></td><td>(adj.) 虛擬的[cite: 1]</td><td>virtual reality (VR) 虛擬實境[cite: 1]</td></tr>
+        <tr><td><b>endless</b></td><td>(adj.) 無休止的[cite: 1]</td><td>-less 表示「無」，如 careless, endless.[cite: 1]</td></tr>
+        <tr><td><b>playful</b></td><td>(adj.) 有趣的[cite: 1]</td><td>A playful way to meet new people.[cite: 1]</td></tr>
       </table>
 
-      <button class="btn" onclick="switchStep(2, 3)">🚀 準備好了！開始情境素養測驗</button>
+      <button class="btn" onclick="switchStep(2, 3)">🚀 複習完畢！開始實戰測驗</button>
     </div>
 
-    <!-- Step 3: 情境素養測驗 -->
+    <!-- Step 3: 課堂實戰練習題 -->
     <div class="step-panel" id="panel3">
-      <div class="step-title">✍️ 第三步：單字與語法情境素養測驗</div>
-      <div class="step-desc">請根據剛才學到的單字與文法知識，完成以下情境挑戰題：</div>
+      <div class="step-title">✍️ 第三步：課堂實戰練習題</div>
+      <div class="step-desc">請填入正確單字並完成會考素養選擇題：</div>
 
       <div id="scoreBoard">
         <h2>測驗得分：<span id="scoreText">0</span> / 100</h2>
@@ -399,86 +400,89 @@
 
       <form id="quizForm">
         
-        <!-- 單字情境填空 -->
-        <h4 style="color: var(--primary); margin: 16px 0 10px 0;">Part A: 單字情境填空 (Vocabulary in Context)</h4>
+        <!-- 【測驗一】聽力精聽填空 -->
+        <h4 style="color: var(--primary); margin: 16px 0 10px 0;">【測驗一】聽力精聽填空 (Listening Cloze)[cite: 1]</h4>
 
         <div class="quiz-card">
-          <div class="quiz-title">1. 【情境：社群資安】Sandy doesn't want to post photos of her home online because she really values her personal <input type="text" class="cloze-input" id="v1" placeholder="輸入單字" required>.</div>
-          <div class="feedback" id="fb_v1"></div>
+          <div class="quiz-title">1. Social media offers a comfortable alternative to connect with others without showing real faces, giving users more <input type="text" class="cloze-input" id="c1" placeholder="填入單字" autocomplete="off" required>.[cite: 1]</div>
+          <div class="feedback" id="fb_c1"></div>
         </div>
 
         <div class="quiz-card">
-          <div class="quiz-title">2. 【情境：解謎破關】To win this detective game, you need to use clear <input type="text" class="cloze-input" id="v2" placeholder="輸入單字" required> to find out who the thief is.</div>
-          <div class="feedback" id="fb_v2"></div>
+          <div class="quiz-title">2. Some games ask players to guess words or draw pictures, while others test <input type="text" class="cloze-input" id="c2" placeholder="填入單字" autocomplete="off" required> or quick thinking.[cite: 1]</div>
+          <div class="feedback" id="fb_c2"></div>
         </div>
 
         <div class="quiz-card">
-          <div class="quiz-title">3. 【情境：線上派對】Because of the heavy rain, the students gathered in a <input type="text" class="cloze-input" id="v3" placeholder="輸入單字" required> meeting room instead of going to school.</div>
-          <div class="feedback" id="fb_v3"></div>
+          <div class="quiz-title">3. Users enter <input type="text" class="cloze-input" id="c3" placeholder="填入單字" autocomplete="off" required> rooms and play short party games together.[cite: 1]</div>
+          <div class="feedback" id="fb_c3"></div>
         </div>
 
         <div class="quiz-card">
-          <div class="quiz-title">4. 【情境：時間管理】Watching short videos for hours feels like an <input type="text" class="cloze-input" id="v4" placeholder="輸入單字" required> waste of time if you don't stop.</div>
-          <div class="feedback" id="fb_v4"></div>
+          <div class="quiz-title">4. The app feels less like <input type="text" class="cloze-input" id="c4" placeholder="填入單字" autocomplete="off" required> scrolling and more like a quick social break.[cite: 1]</div>
+          <div class="feedback" id="fb_c4"></div>
         </div>
 
         <div class="quiz-card">
-          <div class="quiz-title">5. 【情境：寵物互動】The <input type="text" class="cloze-input" id="v5" placeholder="輸入單字" required> kitten loved jumping around and playing with the little ball.</div>
-          <div class="feedback" id="fb_v5"></div>
+          <div class="quiz-title">5. WePlay offers a light and <input type="text" class="cloze-input" id="c5" placeholder="填入單字" autocomplete="off" required> way to meet new people online.[cite: 1]</div>
+          <div class="feedback" id="fb_c5"></div>
         </div>
 
-        <!-- 文法與會考情境題 -->
-        <h4 style="color: var(--primary); margin: 24px 0 10px 0;">Part B: 文法與片語情境選擇 (Grammar & Comprehension)</h4>
+        <!-- 【測驗二】雜誌隨堂測驗 -->
+        <h4 style="color: var(--primary); margin: 24px 0 10px 0;">【測驗二】雜誌隨堂測驗 (Test Yourself)[cite: 1]</h4>
 
         <div class="quiz-card">
-          <div class="quiz-title">6. 【文法題：名詞子句】Our teacher believes ________ reading English for ten minutes every day can make a big difference.</div>
+          <div class="quiz-title">Q. Why do people find interacting in public difficult?[cite: 1]</div>
           <div class="option-list">
-            <label class="option-label"><input type="radio" name="g1" value="A" required> (A) that</label>
-            <label class="option-label"><input type="radio" name="g1" value="B"> (B) what</label>
-            <label class="option-label"><input type="radio" name="g1" value="C"> (C) which</label>
-            <label class="option-label"><input type="radio" name="g1" value="D"> (D) who</label>
+            <label class="option-label"><input type="radio" name="t1" value="A" required> (A) They don't have friends.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="t1" value="B"> (B) They have never tried it.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="t1" value="C"> (C) They prefer to use other platforms.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="t1" value="D"> (D) They feel shy or uncomfortable.[cite: 1]</label>
           </div>
-          <div class="feedback" id="fb_g1"></div>
+          <div class="feedback" id="fb_t1"></div>
+        </div>
+
+        <!-- 【測驗三】會考素養閱讀理解題 -->
+        <h4 style="color: var(--primary); margin: 24px 0 10px 0;">【測驗三】會考素養閱讀理解題 (Reading Comprehension)[cite: 1]</h4>
+
+        <div class="quiz-card">
+          <div class="quiz-title">1. What makes WePlay different from traditional social media apps?[cite: 1]</div>
+          <div class="option-list">
+            <label class="option-label"><input type="radio" name="r1" value="A" required> (A) It forces users to turn on their cameras and show real faces.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r1" value="B"> (B) It focuses on endless scrolling rather than live interaction.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r1" value="C"> (C) It combines mini party games and voice chat in virtual rooms.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r1" value="D"> (D) It only allows players to join for more than three hours.[cite: 1]</label>
+          </div>
+          <div class="feedback" id="fb_r1"></div>
         </div>
 
         <div class="quiz-card">
-          <div class="quiz-title">7. 【片語題：社交連結】Leo and Max love board games, so it is very easy for them to connect ________ each other and become good friends.</div>
+          <div class="quiz-title">2. According to the passage, how do game rooms help people start conversations naturally?[cite: 1]</div>
           <div class="option-list">
-            <label class="option-label"><input type="radio" name="g2" value="A" required> (A) for</label>
-            <label class="option-label"><input type="radio" name="g2" value="B"> (B) with</label>
-            <label class="option-label"><input type="radio" name="g2" value="C"> (C) at</label>
-            <label class="option-label"><input type="radio" name="g2" value="D"> (D) on</label>
+            <label class="option-label"><input type="radio" name="r2" value="A" required> (A) By testing difficult school subjects.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r2" value="B"> (B) By providing shared activities and game hosts.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r2" value="C"> (C) By requiring users to pay for entry tickets.[cite: 1]</label>
+            <label class="option-label"><input type="radio" name="r2" value="D"> (D) By sending automatic text messages to strangers.[cite: 1]</label>
           </div>
-          <div class="feedback" id="fb_g2"></div>
+          <div class="feedback" id="fb_r2"></div>
         </div>
 
-        <div class="quiz-card">
-          <div class="quiz-title">8. 【會考素養題：細節理解】According to the article, why do shy users feel more relaxed on WePlay?[cite: 1]</div>
-          <div class="option-list">
-            <label class="option-label"><input type="radio" name="g3" value="A" required> (A) They are required to show their real faces in high-quality video.[cite: 1]</label>
-            <label class="option-label"><input type="radio" name="g3" value="B"> (B) They can use virtual characters and enjoy extra privacy.[cite: 1]</label>
-            <label class="option-label"><input type="radio" name="g3" value="C"> (C) They must pay expensive fees to join the game rooms.[cite: 1]</label>
-            <label class="option-label"><input type="radio" name="g3" value="D"> (D) They have to play games for more than three hours each time.[cite: 1]</label>
-          </div>
-          <div class="feedback" id="fb_g3"></div>
-        </div>
-
-        <button type="submit" class="btn" style="background: var(--success); margin-top: 24px;">📊 送出答案並查看成績解析</button>
+        <button type="submit" class="btn" style="background: var(--success); margin-top: 24px;">📊 送出答案並查看完整解析</button>
       </form>
     </div>
   </div>
 
   <script>
-    // 正確解答
+    // 正確解答庫
     const correctAnswers = {
-      v1: "privacy",
-      v2: "logic",
-      v3: "virtual",
-      v4: "endless",
-      v5: "playful",
-      g1: "A",
-      g2: "B",
-      g3: "B"
+      c1: "privacy",
+      c2: "logic",
+      c3: "virtual",
+      c4: "endless",
+      c5: "playful",
+      t1: "D",
+      r1: "C",
+      r2: "B"
     };
 
     const form = document.getElementById('quizForm');
@@ -489,9 +493,9 @@
       let correctCount = 0;
       const totalQuestions = 8;
 
-      // 檢查單字填空 (v1 ~ v5)
+      // 檢查精聽填空題 (c1 ~ c5)
       for (let i = 1; i <= 5; i++) {
-        const key = `v${i}`;
+        const key = `c${i}`;
         const inputVal = document.getElementById(key).value.trim().toLowerCase();
         const fb = document.getElementById(`fb_${key}`);
         fb.style.display = "block";
@@ -506,44 +510,42 @@
         }
       }
 
-      // 檢查選擇題 (g1 ~ g3)
-      // g1
-      const g1Val = document.querySelector('input[name="g1"]:checked')?.value;
-      const fb_g1 = document.getElementById('fb_g1');
-      fb_g1.style.display = "block";
-      if (g1Val === correctAnswers.g1) {
+      // 檢查隨堂測驗 (t1)
+      const t1Val = document.querySelector('input[name="t1"]:checked')?.value;
+      const fb_t1 = document.getElementById('fb_t1');
+      fb_t1.style.display = "block";
+      if (t1Val === correctAnswers.t1) {
         correctCount++;
-        fb_g1.className = "feedback correct-fb";
-        fb_g1.innerHTML = "✅ 正確！(A) 名詞子句連接詞使用 that 引導後方完整子句。";
+        fb_t1.className = "feedback correct-fb";
+        fb_t1.innerHTML = "✅ 正確！(D) 許多人在公共場合感到害羞或不自在。";
       } else {
-        fb_g1.className = "feedback wrong-fb";
-        fb_g1.innerHTML = "❌ 答錯囉！動詞 believes 後方接名詞子句當受詞，應用 <b>(A) that</b>。";
+        fb_t1.className = "feedback wrong-fb";
+        fb_t1.innerHTML = "❌ 答錯囉！正確答案為 <b>(D) They feel shy or uncomfortable.</b>";
       }
 
-      // g2
-      const g2Val = document.querySelector('input[name="g2"]:checked')?.value;
-      const fb_g2 = document.getElementById('fb_g2');
-      fb_g2.style.display = "block";
-      if (g2Val === correctAnswers.g2) {
+      // 檢查會考閱讀理解 (r1, r2)
+      const r1Val = document.querySelector('input[name="r1"]:checked')?.value;
+      const fb_r1 = document.getElementById('fb_r1');
+      fb_r1.style.display = "block";
+      if (r1Val === correctAnswers.r1) {
         correctCount++;
-        fb_g2.className = "feedback correct-fb";
-        fb_g2.innerHTML = "✅ 正確！(B) connect with sb 為固定搭配片語（與某人建立連結/產生共鳴）。";
+        fb_r1.className = "feedback correct-fb";
+        fb_r1.innerHTML = "✅ 正確！(C) WePlay 結合虛擬房間的小派對遊戲與語音聊天。";
       } else {
-        fb_g2.className = "feedback wrong-fb";
-        fb_g2.innerHTML = "❌ 答錯囉！片語應搭配介系詞 with，答案為 <b>(B) with</b>。";
+        fb_r1.className = "feedback wrong-fb";
+        fb_r1.innerHTML = "❌ 答錯囉！正確答案為 <b>(C) It combines mini party games and voice chat in virtual rooms.</b>";
       }
 
-      // g3
-      const g3Val = document.querySelector('input[name="g3"]:checked')?.value;
-      const fb_g3 = document.getElementById('fb_g3');
-      fb_g3.style.display = "block";
-      if (g3Val === correctAnswers.g3) {
+      const r2Val = document.querySelector('input[name="r2"]:checked')?.value;
+      const fb_r2 = document.getElementById('fb_r2');
+      fb_r2.style.display = "block";
+      if (r2Val === correctAnswers.r2) {
         correctCount++;
-        fb_g3.className = "feedback correct-fb";
-        fb_g3.innerHTML = "✅ 正確！(B) 課文第一段提到虛擬角色與隱私讓害羞使用者更放鬆。";
+        fb_r2.className = "feedback correct-fb";
+        fb_r2.innerHTML = "✅ 正確！(B) 透過共同活動與房主的引導，讓人自然開啟對話。";
       } else {
-        fb_g3.className = "feedback wrong-fb";
-        fb_g3.innerHTML = "❌ 答錯囉！正確答案為 <b>(B) They can use virtual characters and enjoy extra privacy.</b>";
+        fb_r2.className = "feedback wrong-fb";
+        fb_r2.innerHTML = "❌ 答錯囉！正確答案為 <b>(B) By providing shared activities and game hosts.</b>";
       }
 
       // 計算總分
@@ -554,17 +556,17 @@
 
       const msg = document.getElementById('scoreMsg');
       if (score === 100) {
-        msg.innerText = "太完美了！單字與文法觀念完全掌握！🎉";
+        msg.innerText = "太完美了！會考實力發揮得淋漓盡致！🎉";
       } else if (score >= 75) {
-        msg.innerText = "表現非常優秀！看看解析把答錯的題型記起來喔！💪";
+        msg.innerText = "表現非常優秀！把答錯的單字與解析記起來喔！💪";
       } else {
-        msg.innerText = "回到 Step 2 複習一下文法與單字表，一定會更熟練！🌟";
+        msg.innerText = "可以回到 Step 1 與 Step 2 多翻卡複習幾次，一定會更熟練！🌟";
       }
 
       scoreBoard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    // 切換步驟
+    // 步驟切換函數
     function switchStep(fromStep, toStep) {
       document.getElementById(`panel${fromStep}`).classList.remove('active');
       document.getElementById(`panel${toStep}`).classList.add('active');
